@@ -3,15 +3,48 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
 class PostSummaryResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
+    #[OA\Schema (
+        schema: "PostSummary",
+        title: "PostSummary",
+        description: "Post summary resource",
+        properties: [
+            new OA\Property(
+                property: "title",
+                type: "string",
+                description: "The title of the post"
+            ),
+            new OA\Property(
+                property: "slug",
+                type: "string",
+                description: "The slug of the post"
+            ),
+            // new OA\Property(
+            //     property: "author",
+            //     type: "string",
+            //     description: "The author of the post"
+            // ),
+            new OA\Property(
+                property: "content",
+                type: "string",
+                description: "The content of the post"
+            ),
+            new OA\Property(
+                property: "created_at",
+                type: "string",
+                description: "The date the post was created"
+            ),
+            new OA\Property(
+                property: "updated_at",
+                type: "string",
+                description: "The date the post was updated"
+            )
+        ]
+    )]
     public function toArray($request)
     {
         return [

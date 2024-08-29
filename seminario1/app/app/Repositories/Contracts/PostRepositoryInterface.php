@@ -13,5 +13,7 @@ interface PostRepositoryInterface
     public function store(StorePostDTO $data): Post;
     public function getBySlugOrFail(string $slug): Post;
     public function getBySlug(string $slug): ?Post;
+    public function getByIdOrFail(string $id): Post;
+    public function getById(string $id): ?Post;
     public function update(string $slug, UpdatePostDTO $data): Post;
 }

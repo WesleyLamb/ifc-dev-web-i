@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use OpenApi\Attributes as OA;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::group(['prefix' => 'posts'], function() {
         Route::get('', [PostController::class, 'index']);
         Route::post('', [PostController::class, 'store']);
-        Route::group(['prefix' => '{slug}'], function () {
+        Route::group(['prefix' => '{id}'], function () {
             Route::get('', [PostController::class, 'show']);
             Route::put('', [PostController::class, 'update']);
             // Route::delete('', 'PostController@destroy');

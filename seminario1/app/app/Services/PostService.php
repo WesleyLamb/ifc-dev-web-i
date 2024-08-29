@@ -34,11 +34,11 @@ class PostService implements PostServiceInterface
 
     public function show(Request $request): Post
     {
-        return $this->postRepository->getBySlugOrFail($request->route('slug'));
+        return $this->postRepository->getByIdOrFail($request->route('id'));
     }
 
     public function update(UpdatePostRequest $request): Post
     {
-        return $this->postRepository->update($request->route('slug'), UpdatePostDTO::fromRequest($request));
+        return $this->postRepository->update($request->route('id'), UpdatePostDTO::fromRequest($request));
     }
 }

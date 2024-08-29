@@ -37,9 +37,19 @@ class PostRepository implements PostRepositoryInterface
         return Post::where('slug', $slug)->first();
     }
 
-    public function update(string $slug, UpdatePostDTO $data): Post
+    public function getByIdOrFail(string $id): Post
     {
-        $post = $this->getBySlugOrFail($slug);
+        return Post::where('uuid', $id)->firstOrFail();
+    }
+
+    public function getById(string $id): ?Post
+    {
+        return Post::where('uuid', $id);
+    }
+
+    public function update(string $id, UpdatePostDTO $data): Post
+    {
+        $post = $this->getByIdOrFail($id);
 
         if ($data->titleWasChanged) {
             $post->title = $data->title;
