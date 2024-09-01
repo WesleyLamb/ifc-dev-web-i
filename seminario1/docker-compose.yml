@@ -2,15 +2,17 @@ services:
   nginx:
     depends_on:
       - app
-    image: nginx:alpine
+    image: nginx
     container_name: web-sem1.nginx
     tty: true
     ports:
-      - "81:80"
+      - "453:443"
     restart: unless-stopped
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./app:/var/www/app
+      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
+      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
     networks:
       - seminario1
   db:
@@ -28,6 +30,21 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - seminario1
+  # db_auth:
+  #   image: postgres
+  #   container_name: web-sem1.db_auth
+  #   tty: true
+  #   environment:
+  #     - POSTGRES_USER=${DB_USER_AUTH}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD_AUTH}
+  #     - POSTGRES_DB=${DB_NAME_AUTH}
+  #   ports:
+  #     - "5434:5432"
+  #   restart: unless-stopped
+  #   volumes:
+  #     - db_auth:/var/lib/postgresql/data
+  #   networks:
+  #     - seminario1
   app:
     depends_on:
       - db
@@ -39,11 +56,50 @@ services:
     restart: unless-stopped
     volumes:
       - ./app:/var/www/app
+      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
+      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
     networks:
       - seminario1
+  # auth:
+  #   depends_on:
+  #     - db_auth
+  #   image: quay.io/keycloak/keycloak:24.0
+  #   container_name: web-sem1.auth
+  #   environment:
+  #     - KC_HOSTNAME=https://auth.castorsoft.dev
+  #     - KC_HOSTNAME_PORT=443
+  #     - KC_HOSTNAME_ADMIN=https://keycloak.castorsoft.dev
+  #     - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
+  #     - KEYCLOAK_ADMIN=admin
+  #     - KEYCLOAK_ADMIN_PASSWORD=admin
+  #     - KC_HEALTH_ENABLED=true
+  #     - KC_LOG_LEVEL=info
+  #     - KC_DB=postgres
+  #     - KC_DB_URL_HOST=db_auth
+  #     - KC_DB_USERNAME=${DB_USER_AUTH}
+  #     - KC_DB_PASSWORD=${DB_PASSWORD_AUTH}
+  #     - KC_DB_PORT=5432
+  #     - KC_HOSTNAME_STRICT=false
+  #     - KC_HOSTNAME_STRICT_HTTPS=false
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "https://auth.castorsoft.dev/health/ready"]
+  #     interval: 15s
+  #     timeout: 2s
+  #     retries: 5
+  #     start_period: 30s
+  #   command: ["start", "--https-port", "7443", "--https-certificate-file", "/etc/ssl/certs/fullchain.pem", "--https-certificate-key-file", "/etc/ssl/certs/privkey.pem"]
+  #   tty: true
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
+  #     - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
+  #   networks:
+  #     - seminario1
 volumes:
   db:
     driver: local
+  # db_auth:
+  #   driver: local
 networks:
   seminario1:
     driver: bridge
