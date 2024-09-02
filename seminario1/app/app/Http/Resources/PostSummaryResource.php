@@ -14,6 +14,12 @@ class PostSummaryResource extends JsonResource
         description: "Post summary resource",
         properties: [
             new OA\Property(
+                property: "id",
+                type: "string",
+                format: "uuid",
+                description: "The id of the post"
+            ),
+            new OA\Property(
                 property: "title",
                 type: "string",
                 description: "The title of the post"
@@ -48,6 +54,7 @@ class PostSummaryResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->uuid,
             'title' => $this->title,
             'slug' => $this->slug,
             // 'author' => $this->user->name,

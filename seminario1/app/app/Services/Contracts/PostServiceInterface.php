@@ -14,4 +14,5 @@ interface PostServiceInterface
     public function store(StorePostRequest $request): Post;
     public function show(Request $request): Post;
     public function update(UpdatePostRequest $request): Post;
+    public function delete(Request $request): void;
 }

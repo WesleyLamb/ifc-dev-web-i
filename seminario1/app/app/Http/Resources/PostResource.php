@@ -41,11 +41,6 @@ class PostResource extends JsonResource
                 property: "updated_at",
                 type: "string",
                 description: "The date the post was updated"
-            ),
-            new OA\Property(
-                property: "deleted",
-                type: "boolean",
-                description: "Whether the post is deleted or not"
             )
         ]
     )]
@@ -58,7 +53,6 @@ class PostResource extends JsonResource
             'content' => $this->content,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted' => $this->deleted_at ? true : false,
         ];
     }
 }

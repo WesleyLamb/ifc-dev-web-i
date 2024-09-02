@@ -32,9 +32,11 @@ class PostRepository implements PostRepositoryInterface
         return Post::where('slug', $slug)->firstOrFail();
     }
 
-    public function getBySlug(string $slug): ?Post
+    public function getBySlug(string $slug, bool $deletedRecords = false): ?Post
     {
-        return Post::where('slug', $slug)->first();
+        return Post::where('slug', $slug)->when($deletedRecords, function($q) {
+            $q->withTrashed();
+        })->first();
     }
 
     public function getByIdOrFail(string $id): Post
@@ -65,5 +67,11 @@ class PostRepository implements PostRepositoryInterface
         }
 
         return $post->refresh();
+    }
+
+    public function delete(string $id): void
+    {
+        $post = $this->getByIdOrFail($id);
+        $post->delete();
     }
 }

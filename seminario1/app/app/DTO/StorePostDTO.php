@@ -19,7 +19,7 @@ class StorePostDTO
 
         $repo = app()->make(PostRepositoryInterface::class);
         $slug = Str::slug($title);
-        while ($repo->getBySlug($slug)) {
+        while ($repo->getBySlug($slug, true)) {
             $slug = Str::slug($title . ' ' . Str::random(5));
         }
         $this->slug = $slug;

@@ -11,13 +11,9 @@ use OpenApi\Attributes as OA;
     version: "1.0.0",
     description: "A simple API to manage posts"
 )]
+
 class GenerateDocsApi extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'generate:docs:api';
 
     /**

@@ -10,7 +10,12 @@ use App\Services\Contracts\PostServiceInterface;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
-
+#[
+    OA\Server(
+        url: "https://app.castorsoft.dev/api/v1",
+        description: "Local server"
+    )
+]
 class PostController extends Controller
 {
     public PostServiceInterface $postService;
@@ -75,10 +80,12 @@ class PostController extends Controller
         return PostSummaryResource::collection($this->postService->index($request));
     }
 
+
     public function store(StorePostRequest $request)
     {
         return new PostResource($this->postService->store($request));
     }
+
     #[OA\PathItem(
         path: "/posts/{id}",
         parameters: [
@@ -86,6 +93,21 @@ class PostController extends Controller
                 ref: "#/components/parameters/PostId"
             )
         ],
+        get: new OA\Get(
+            operationId: "ShowPost",
+            summary: "Get a post",
+            responses: [
+                new OA\Response(
+                    response: 200,
+                    description: "Post found",
+                    content: [
+                        new OA\JsonContent(
+                            ref: "#/components/schemas/Post"
+                        )
+                    ]
+                )
+            ]
+        ),
         put: new OA\Put(
             operationId: "UpdatePost",
             summary: "Update a post",
@@ -108,12 +130,23 @@ class PostController extends Controller
                     ]
                 )
             ]
+        ),
+        delete: new OA\Delete(
+            operationId: "DeletePost",
+            summary: "Delete a post",
+            responses: [
+                new OA\Response(
+                    response: 204,
+                    description: "Post deleted"
+                )
+            ]
         )
     )]
     public function show(Request $request)
     {
         return new PostResource($this->postService->show($request));
     }
+
     #[OA\Parameter(
         parameter: "PostId",
         name: "PostId",
@@ -127,5 +160,11 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request)
     {
         return new PostResource($this->postService->update($request));
+    }
+
+    public function delete(Request $request)
+    {
+        $this->postService->delete($request);
+        return response()->noContent();
     }
 }

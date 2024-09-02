@@ -16,4 +16,5 @@ interface PostRepositoryInterface
     public function getByIdOrFail(string $id): Post;
     public function getById(string $id): ?Post;
     public function update(string $slug, UpdatePostDTO $data): Post;
+    public function delete(string $slug): void;
 }

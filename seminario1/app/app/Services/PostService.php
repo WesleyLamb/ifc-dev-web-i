@@ -41,4 +41,9 @@ class PostService implements PostServiceInterface
     {
         return $this->postRepository->update($request->route('id'), UpdatePostDTO::fromRequest($request));
     }
+
+    public function delete(Request $request): void
+    {
+        $this->postRepository->delete($request->route('id'));
+    }
 }

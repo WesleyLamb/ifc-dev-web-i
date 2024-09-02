@@ -26,7 +26,7 @@ Route::group(['prefix' => 'v1'], function() {
         Route::group(['prefix' => '{id}'], function () {
             Route::get('', [PostController::class, 'show']);
             Route::put('', [PostController::class, 'update']);
-            // Route::delete('', 'PostController@destroy');
+            Route::delete('', [PostController::class, 'delete']);
         });
     });
 });
