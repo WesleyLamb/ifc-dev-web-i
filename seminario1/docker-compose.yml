@@ -11,8 +11,8 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./app:/var/www/app
-      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
-      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
+      - ~/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
+      - ~/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
     networks:
       - seminario1
   db:
@@ -56,8 +56,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./app:/var/www/app
-      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
-      - /home/lamb/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
+      - ~/dev/WesleyLamb/certs/castorsoft.dev.crt:/etc/ssl/certs/fullchain.pem
+      - ~/dev/WesleyLamb/certs/castorsoft.dev.key:/etc/ssl/certs/privkey.pem
     networks:
       - seminario1
   # auth:
