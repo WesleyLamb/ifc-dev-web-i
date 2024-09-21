@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,11 @@
 </head>
 
 <body>
+    <nav class="navbar bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Todo List</a>
+        </div>
+    </nav>
     <main class="container">
         <h1>Todo List</h1>
         <div class="input-group mb-3">
@@ -34,13 +39,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         loadTodos();
-
-        document.getElementById("todo-create").addEventListener('click', () => {
+        createTodoEvent = () => {
             let todo = document.getElementById('todo').value;
             let date = document.getElementById('todo-date').value;
             todoList.add(createTodo(todo, date));
             loadTodos();
-        })
+        }
+        document.getElementById("todo-create").addEventListener('click', createTodoEvent);
     });
 
     function loadTodos() {
