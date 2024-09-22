@@ -57,8 +57,8 @@ function todoToHTML(todo) {
         <td>${todo.date}</td>
         <td>${!todo.isDone ? "Pendente" : "Concluído"}</td>
         <td>
-            <button type="button" class="btn btn-success" onclick="toggleTodoStatus(${todo.id})">Concluir</button>
-            <button type="button" class="btn btn-danger" onclick="deleteTodo(${todo.id})">Excluir</button>
+            <button type="button" class="btn-primary" onclick="toggleTodoStatus(${todo.id})">Concluir</button>
+            <button type="button" class="btn-danger" onclick="deleteTodo(${todo.id})">Excluir</button>
         </td>
     `;
 }
