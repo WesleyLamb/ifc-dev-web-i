@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/style.css">
     <title>Exercício 03</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/assets/picsum-api.js"></script>
 </head>
 
 <body class="theme-light">
@@ -17,21 +19,21 @@
     <main class="container">
         <h1>Pic catalog</h1>
         <div class="content">
-            <div class="mb-3">
+            <div>
                 <label for="search-width" class="input-label">Largura</label>
                 <div class="input-group">
                     <input type="text" class="input" id="search-width">
                 </div>
-                <div class="input-text d-none" id="input-label-error"></div>
+                <div class="ml-10 input-text d-none f-red f-small" id="search-width-error"></div>
             </div>
-            <div class="mb-3">
+            <div>
                 <label for="search-height" class="input-label">Altura</label>
                 <div class="input-group">
                     <input type="text" class="input" id="search-height">
                 </div>
-                <div class="input-text d-none" id="input-label-error"></div>
+                <div class="ml-10 input-text d-none f-red f-small" id="search-height-error"></div>
             </div>
-            <div class="mb-3">
+            <div>
                 <label for="search-amount" class="input-label">Quantidade</label>
                 <div class="input-group">
                 <select class="input" name="search-amount" id="search-amount">
@@ -41,27 +43,112 @@
                     <option value="20">20</option>
                 </select>
                 </div>
-                <div class="input-text d-none" id="input-label-error"></div>
+                <div class="ml-10 input-text d-none f-red f-small" id="search-amount-error"></div>
             </div>
-            <div class="input-group">
-                <button id="search-button">Buscar</button>
+            <div class="d-flex align-start h-full">
+                <button id="search-button" class="mt-32">Buscar</button>
             </div>
-
+        </div>
+        <div class="d-grid d-grid-4" id="pictures-grid">
 
         </div>
-
-        <!-- <div class="form-group">
-            <input type="text" name="search-width" id="search-width">
-            <input type="text" name="search-height" id="search-height">
-            <select name="search-amount" id="search-amount">
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-            </select>
-            <button id="search-button">Buscar</button>
-        </div> -->
     </main>
 </body>
+<script>
+    function searchPictures() {
+        const width = document.getElementById("search-width").value;
+        const height = document.getElementById("search-height").value;
+        const amount = document.getElementById("search-amount").value;
+
+        const widthError = document.getElementById("search-width-error");
+        const heightError = document.getElementById("search-height-error");
+        const amountError = document.getElementById("search-amount-error");
+
+        hasError = false;
+        if (!Number.isInteger(parseInt(width))) {
+            widthError.innerHTML = "Largura inválida";
+            widthError.classList.remove("d-none");
+            hasError = true;
+        } else {
+            widthError.classList.add("d-none");
+        }
+
+        if (!Number.isInteger(parseInt(height))) {
+            heightError.innerHTML = "Altura inválida";
+            heightError.classList.remove("d-none");
+            hasError = true;
+        } else {
+            heightError.classList.add("d-none");
+        }
+
+        if (!Number.isInteger(parseInt(amount))) {
+            amountError.innerHTML = "Quantidade inválida";
+            amountError.classList.remove("d-none");
+            hasError = true;
+        } else {
+            amountError.classList.add("d-none");
+        }
+
+        if (hasError) {
+            return;
+        }
+
+        document.getElementById("pictures-grid").innerHTML = "";
+
+        for (let i = 0; i < amount; i++) {
+            getRandomPictures(width, height).then((response) => {
+                const picturesGrid = document.getElementById("pictures-grid");
+                const pictureGallery = document.createElement("div");
+                const pictureDiv = document.createElement("div");
+                const pictureOptions = document.createElement("div");
+                const picture = document.createElement("img");
+                picture.src = picsumBaseURL + `/id/${response.headers['picsum-id']}/${width}/${height}.webp`;
+                picture.classList.add("gallery-picture");
+                picture.setAttribute("picture-id", response.headers['picsum-id']);
+
+                const pictureOptionsButtonDownloadCurrentSize = document.createElement("button");
+                pictureOptionsButtonDownloadCurrentSize.classList.add("mr-10");
+                pictureOptionsButtonDownloadCurrentSize.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M3.646 4.146a.5.5 0 0 1 .708 0L8 7.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708M1 11.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5"></path>
+</svg> Esta imagem`;
+                pictureOptionsButtonDownloadCurrentSize.addEventListener('click', (event) => {
+                    console.log(event);
+                    link = document.createElement('a');
+                    link.href = event.target.parentElement.parentElement.querySelector("img").src;
+                    link.download = "image.webp";
+                    link.target = "_blank";
+                    link.click();
+                })
+                const pictureOptionsButtonDownloadFullSize = document.createElement("button");
+                pictureOptionsButtonDownloadFullSize.innerHTML = `<svg xmlns="hzttp://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-bar-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M3.646 4.146a.5.5 0 0 1 .708 0L8 7.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708M1 11.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5"></path>
+</svg> Imagem original`;
+                pictureOptionsButtonDownloadFullSize.addEventListener('click', (event) => {
+                    console.log(event);
+                    link = document.createElement('a');
+                    link.href = picsumBaseURL + `/id/${event.target.parentElement.parentElement.querySelector("img").getAttribute("picture-id")}/1920/1080.webp`;
+                    link.download = "image.webp";
+                    link.target = "_blank";
+                    link.click();
+                })
+                pictureOptions.classList.add("gallery-options");
+                pictureDiv.appendChild(picture);
+
+                pictureOptions.appendChild(pictureOptionsButtonDownloadCurrentSize);
+                pictureOptionsButtonDownloadFullSize
+                pictureOptions.appendChild(pictureOptionsButtonDownloadFullSize);
+
+                pictureGallery.appendChild(pictureDiv);
+                pictureGallery.appendChild(pictureOptions);
+                pictureGallery.classList.add("gallery");
+                picturesGrid.appendChild(pictureGallery);
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById("search-button").addEventListener('click', searchPictures)
+    });
+</script>
 
 </html>
