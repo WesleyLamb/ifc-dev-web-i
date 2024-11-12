@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+}
+/* Menu Fixo */
+.navbar {
+    font-size: 24px;
+    min-height: 10vh;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #fff;
+    position: fixed;
+    background-color: black;
+}
+/* Menu Lateral */
+.sidebar {
+    position: sticky;
+    top: 10vh;
+    background-color: #c5c5c5;
+    max-width: 250px;
+    min-height: calc(90vh);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 10px 0;
+}
+
+/* Conteúdo Principal */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+    min-height: 90vh;
+}
+/* Botão Flutuante */
+.floating-button {
+
+}
+/* Rodapé Fixo */
+.footer {
+
+}
+
+@media (max-width: 768px) {
+
+}

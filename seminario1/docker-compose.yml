@@ -6,7 +6,7 @@ services:
     container_name: web-sem1.nginx
     tty: true
     ports:
-      - "453:443"
+      - "443:443"
     restart: unless-stopped
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
