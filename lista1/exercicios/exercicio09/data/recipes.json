@@ -1,0 +1,71 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Lasanha",
+            "ingredients": [
+                "500g de massa de lasanha",
+                "1kg de queijo mussarela",
+                "1kg de presunto",
+                "1kg de carne moída",
+                "2 latas de molho de tomate",
+                "2 latas de creme de leite",
+                "2 colheres de margarina",
+                "2 colheres de farinha de trigo",
+                "2 copos de leite",
+                "queijo ralado"
+            ],
+            "preparation": [
+                "Cozinhe a massa da lasanha em 5 litros de água com 1 colher de sal e um fio de óleo por 5 minutos",
+                "Em uma panela, coloque a margarina, a farinha de trigo, o leite e mexa até formar um creme",
+                "Desligue o fogo e acrescente o creme de leite",
+                "Em um refratário grande, coloque uma camada de molho, uma camada de massa, uma camada de presunto e uma camada de queijo",
+                "Repita as camadas até a borda do refratário",
+                "Finalize com queijo ralado",
+                "Leve ao forno por 20 minutos"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Macarronada",
+            "ingredients": [
+                "500g de macarrão",
+                "1kg de carne moída",
+                "2 latas de molho de tomate",
+                "2 latas de creme de leite",
+                "2 colheres de margarina",
+                "2 colheres de farinha de trigo",
+                "2 copos de leite",
+                "queijo ralado"
+            ],
+            "preparation": [
+                "Cozinhe o macarrão em 5 litros de água com 1 colher de sal e um fio de óleo por 8 minutos",
+                "Em uma panela, coloque a margarina, a farinha de trigo, o leite e mexa até formar um creme",
+                "Desligue o fogo e acrescente o creme de leite",
+                "Em uma panela, frite a carne moída",
+                "Acrescente o molho de tomate e deixe cozinhar por 5 minutos",
+                "Em um refratário grande, coloque uma camada de molho, uma camada de macarrão, uma camada de creme e uma camada de queijo",
+                "Repita as camadas até a borda do refratário",
+                "Finalize com queijo ralado",
+                "Leve ao forno por 20 minutos"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Pudim",
+            "ingredients": [
+                "1 lata de leite condensado",
+                "2 latas de leite",
+                "4 ovos",
+                "1 xícara de açúcar"
+            ],
+            "preparation": [
+                "Em uma panela, derreta o açúcar até ficar moreno",
+                "Em um liquidificador, bata o leite condensado, o leite e os ovos",
+                "Despeje a mistura na forma caramelizada",
+                "Leve ao forno em banho-maria por 45 minutos"
+            ]
+        }
+
+    ]
+}
